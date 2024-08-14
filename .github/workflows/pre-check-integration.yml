@@ -26,6 +26,15 @@ on:
           }}
 
 jobs:
+  check_base:
+    name: Check Base Branch Changed
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event.changes.base && github.event.pull_request.base.ref == 'main')
+    steps:
+      - name: Base branch changed to main
+        run: echo "The base branch was changed to master from ${{ github.event.changes.base.ref.from }}."
+      
   check_and_cancel:
     name: Check preconditions and cancel previous jobs
     if: >-
