@@ -23,6 +23,14 @@ concurrency:
 jobs:
   pre_check:
     uses: ./.github/workflows/pre-check-integration.yml
+  
+  my-test:
+    needs: pre_check
+    if: needs.pre_check.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: My Test
+        run: echo "My Test ${{ github.event.changes.base.ref.from }}."
 
   matrix-test:
     needs: pre_check
