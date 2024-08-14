@@ -14,7 +14,12 @@ on:
         value: >-
           ${{
             github.event_name != 'pull_request' || (
-              github.event.pull_request.base.ref == 'main' &&
+              (
+                github.event.pull_request.base.ref == 'main' ||
+                startsWith(github.event.pull_request.base.ref, 'release-') ||
+                startsWith(github.event.pull_request.base.ref, 'dev-') ||
+                github.event.pull_request.base.ref == 'beta'
+              ) &&
               github.event.pull_request.draft == false &&
               (
                 contains(github.event.pull_request.labels.*.name, 'automerge:squash') || 
@@ -26,30 +31,17 @@ on:
           }}
 
 jobs:
-  check_base:
-    name: Check Base Branch Changed
-    runs-on: ubuntu-latest
-    if: >-
-      (github.event.changes.base && github.event.pull_request.base.ref == 'main')
-    steps:
-      - name: Base branch changed to main
-        run: echo "The base branch was changed to master from ${{ github.event.changes.base.ref.from }}."
-
-  always_running:
-    name: Always Running
-    runs-on: ubuntu-latest
-    if: >-
-      github.event.pull_request.auto_merge != null
-    steps:
-      - name: Always Running
-        run: echo "Event_Name, ${{ github.event_name }}, Base_Ref, ${{ github.event.pull_request.base.ref }}, Auto_Merge, ${{ github.event.pull_request.auto_merge }},"
-      
   check_and_cancel:
     name: Check preconditions and cancel previous jobs
     if: >-
       github.event_name != 'pull_request' ||
       contains(github.event.pull_request.labels.*.name, 'force:integration') || (
-        github.event.pull_request.base.ref == 'main' &&
+        (
+          github.event.pull_request.base.ref == 'main' ||
+          startsWith(github.event.pull_request.base.ref, 'release-') ||
+          startsWith(github.event.pull_request.base.ref, 'dev-') ||
+          github.event.pull_request.base.ref == 'beta'
+        ) &&
         github.event.pull_request.draft == false &&
         (
           contains(github.event.pull_request.labels.*.name, 'automerge:squash') || 
