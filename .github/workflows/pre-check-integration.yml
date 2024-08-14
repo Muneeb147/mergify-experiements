@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Always Running
-        run: echo "Event_Name, ${{ github.event_name }}, Base_Ref, ${{ github.event.pull_request.base.ref }}, Auto_Merge, ${{ (github.event.pull_request.auto_merge != 'null') }},"
+        run: echo "Event_Name, ${{ github.event_name }}, Base_Ref, ${{ github.event.pull_request.base.ref }}, Auto_Merge, ${{ (github.event.pull_request.auto_merge != null) }},"
       
   check_and_cancel:
     name: Check preconditions and cancel previous jobs
