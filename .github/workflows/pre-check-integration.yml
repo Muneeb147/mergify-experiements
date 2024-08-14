@@ -34,6 +34,13 @@ jobs:
     steps:
       - name: Base branch changed to main
         run: echo "The base branch was changed to master from ${{ github.event.changes.base.ref.from }}."
+
+  always_running:
+    name: Always Running
+    runs-on: ubuntu-latest
+    steps:
+      - name: Always Running
+        run: echo "Event_Name, ${{ github.event_name }}, Base_Ref, ${{ github.event.pull_request.base.ref }}, Auto_Merge, ${{ github.event.pull_request.auto_merge }}"
       
   check_and_cancel:
     name: Check preconditions and cancel previous jobs
