@@ -5,7 +5,7 @@ on:
     outputs:
       should_run:
         description: "'true' if the test should run"
-        value: "${{ jobs.check_and_cancel.outcome != 'skipped' && jobs.check_and_cancel.outputs.should_skip != 'true' }}"
+        value: "${{ jobs.check_and_cancel.outcome != 'skipped' && 'true' }}"
       previous_success:
         description: "'true' if should not run because of a previous successful run"
         value: "${{ jobs.check_and_cancel.outcome != 'skipped' && jobs.check_and_cancel.outputs.previous_success == 'true' }}"
