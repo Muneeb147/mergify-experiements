@@ -31,7 +31,7 @@ jobs:
         - name: Trigger Workflow
           uses: benc-uk/workflow-dispatch@v1
           with:
-            inputs: '{ "ref": "${{ github.head_ref }}", "sha": "${{ github.sha }}"}'
+            inputs: '{ "ref": "final-branch", "sha": "${{ github.sha }}"}'
             token: ${{ secrets.GITHUB_TOKEN }}
             workflow: Integration tests
           
