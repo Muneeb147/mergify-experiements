@@ -19,5 +19,5 @@ jobs:
                 curl -X POST \
                 https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
                 -H "Accept: application/vnd.github.v3+json" \
-                -H "Authorization: token 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" \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                 -d '{"labels":["trigger-second-workflow"]}'
