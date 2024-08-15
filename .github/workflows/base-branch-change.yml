@@ -12,22 +12,21 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-        - name: trigger integration
-          uses: actions/github-script@v6
-          with:
-            script: |
-                const prNumber = context.issue.number;
-                console.log(github.sha);
-
-                await github.rest.actions.createWorkflowDispatch({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: 'integration.yml',
-                ref: 'final-branch',
-                inputs: '{"sha": "${{ github.sha }}"}'
+          - name: Trigger Specific Commit Workflow
+            uses: actions/github-script@v6
+            with:
+              script: |
+                const { Octokit } = require("@octokit/rest");
+                const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+                await octokit.actions.createWorkflowDispatch({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  workflow_id: 'integration.yml',
+                  ref: context.payload.pull_request.head.ref,
+                inputs: {
+                  sha: context.payload.pull_request.head.sha
+                }
                 });
-
-                console.log(`Second workflow triggered successfully.`);
         
           
               
