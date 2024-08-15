@@ -12,12 +12,21 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: trigger integration
-              run: |
-                echo Muneeb
-                BRANCH_REF="${{ github.head_ref }}"
-                curl -X POST \
-                https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
-                -H "Accept: application/vnd.github.v3+json" \
-                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                -d '{"labels":["trigger-second-workflow"]}'
+        - name: trigger integration
+          uses: actions/github-script@v6
+          with:
+            script: |
+                    const prNumber = '${{ github.event.pull_request.number }}';
+                    const label = 'trigger-second-workflow';
+                    const workflowFile = 'second-workflow.yml';
+                    const ref = 'main';
+
+                    // Add label to PR
+                    await github.rest.issues.addLabels({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: prNumber,
+                    labels: [label]
+                    });
+              
+              
