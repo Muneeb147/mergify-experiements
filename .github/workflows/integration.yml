@@ -7,11 +7,6 @@ on:
         description: 'GitHub SHA to be used for checkout'
         required: true
 
-  # workflow_run:
-  #   workflows: ["Trigger Base Branch Change"]  # The name of the first workflow
-  #   types:
-  #     - completed  # Trigger when the first workflow completes
-
   pull_request:
     types:
       - opened
