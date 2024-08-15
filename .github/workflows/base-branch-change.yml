@@ -21,6 +21,8 @@ jobs:
                     const workflowFile = 'second-workflow.yml';
                     const ref = 'main';
 
+                    console.log(`Triggering workflow ${label} for PR ${prNumber}`);
+
                     // Add label to PR
                     await github.rest.issues.addLabels({
                     owner: context.repo.owner,
