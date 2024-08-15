@@ -20,10 +20,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 workflow_id: 'integration.yml',
-                ref: context.payload.pull_request.head.ref,
-                inputs: {
-                  sha: context.payload.pull_request.head.sha
-                }
+                ref: context.payload.pull_request.head.ref
                 });
         
           
