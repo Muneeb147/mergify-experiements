@@ -16,20 +16,16 @@ jobs:
           uses: actions/github-script@v6
           with:
             script: |
-                    const prNumber = '${{ github.event.pull_request.number }}';
-                    const label = 'trigger-second-workflow';
-                    const workflowFile = 'second-workflow.yml';
-                    const ref = 'main';
-                    const label2 = 'force:integration'
+                const prNumber = context.issue.number;
 
-                    console.log(`Triggering workflow ${label} for PR ${prNumber}`);
+                // Trigger the second workflow
+                await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'integration.yml',
+                ref: context.ref
+                });
 
-                    // Add label to PR
-                    await github.rest.issues.addLabels({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    issue_number: prNumber,
-                    labels: [label2]
-                    });
+                console.log(`Second workflow triggered successfully.`);
               
               
