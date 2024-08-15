@@ -17,7 +17,8 @@ jobs:
           with:
             script: |
                 const prNumber = context.issue.number;
-
+                console.log(prNumber);
+                return;
                 // Trigger the second workflow
                 await github.rest.actions.createWorkflowDispatch({
                 owner: context.repo.owner,

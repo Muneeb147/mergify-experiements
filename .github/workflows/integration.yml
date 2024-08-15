@@ -3,6 +3,11 @@ name: Integration tests
 on:
   workflow_dispatch:
 
+  workflow_run:
+    workflows: ["Trigger Base Branch Change"]  # The name of the first workflow
+    types:
+      - completed  # Trigger when the first workflow completes
+
   pull_request:
     types:
       - opened
@@ -26,7 +31,7 @@ jobs:
 
   matrix-test:
     needs: pre_check
-    if: needs.pre_check.outputs.should_run == 'true'
+    if: needs.pre_check.outputs.should_run == 'true' && ${{ github.event_name != 'workflow_run' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}  
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
