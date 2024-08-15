@@ -23,7 +23,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 workflow_id: 'integration.yml',
-                ref: context.ref
+                ref: context.head_ref
                 });
 
                 console.log(`Second workflow triggered successfully.`);
