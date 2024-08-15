@@ -3,8 +3,11 @@ name: Integration tests
 on:
   workflow_dispatch:
     inputs:
+      ref:
+        description: 'GitHub REF to be used for checkout'
+        required: false
       sha:
-        description: "The commit SHA to retrigger the workflow for"
+        description: 'GitHub SHA to be used for checkout'
         required: true
 
   # workflow_run:

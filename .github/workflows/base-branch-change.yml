@@ -11,21 +11,29 @@ jobs:
         if: ${{ github.event.changes.base && github.event.pull_request.base.ref == 'main' }}
         runs-on: ubuntu-latest
 
+        # steps:
+        # - name: trigger integration
+        #   uses: actions/github-script@v6
+        #   with:
+        #     script: |
+        #         const prNumber = context.issue.number;
+        #         console.log(prNumber);
+
+        #         await github.rest.actions.createWorkflowDispatch({
+        #         owner: context.repo.owner,
+        #         repo: context.repo.repo,
+        #         workflow_id: 'integration.yml',
+        #         ref: 'final-branch'
+        #         });
+
+        #         console.log(`Second workflow triggered successfully.`);
         steps:
-        - name: trigger integration
-          uses: actions/github-script@v6
+        - name: Trigger Workflow
+          uses: benc-uk/workflow-dispatch@v1
           with:
-            script: |
-                const prNumber = context.issue.number;
-                console.log(prNumber);
-
-                await github.rest.actions.createWorkflowDispatch({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: 'integration.yml',
-                ref: 'final-branch'
-                });
-
-                console.log(`Second workflow triggered successfully.`);
+            inputs: '{ "ref": "${{ github.head_ref }}", "sha": "${{ github.sha }}"}'
+            token: ${{ secrets.GITHUB_TOKEN }}
+            workflow: Integration tests
+          
               
               
