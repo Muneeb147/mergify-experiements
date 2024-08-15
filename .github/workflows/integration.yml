@@ -3,9 +3,6 @@ name: Integration tests
 on:
   workflow_dispatch:
     inputs:
-      ref:
-        description: 'GitHub REF to be used for checkout'
-        required: false
       sha:
         description: 'GitHub SHA to be used for checkout'
         required: true
