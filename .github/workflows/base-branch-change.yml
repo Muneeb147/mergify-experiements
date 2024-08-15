@@ -23,7 +23,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 workflow_id: 'integration.yml',
-                ref: 'final-branch'
+                ref: 'final-branch',
                 inputs: '{"sha": "${{ github.sha }}"}'
                 });
 
