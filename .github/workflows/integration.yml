@@ -2,10 +2,6 @@ name: Integration tests
 
 on:
   workflow_dispatch:
-    inputs:
-      sha:
-        description: 'GitHub SHA to be used for checkout'
-        required: true
 
   pull_request:
     types:
@@ -30,13 +26,14 @@ jobs:
 
   matrix-test:
     needs: pre_check
-    if: needs.pre_check.outputs.should_run == 'true'  
+    if: needs.pre_check.outputs.should_run == 'true' || ${{ github.event_name == 'workflow_dispatch' }} 
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         variation: [one, two]
     timeout-minutes: 5
+    
     steps:
       - uses: actions/checkout@v3
       - name: Get the behavior from the PR description
@@ -80,6 +77,8 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}
       - name: Get the behavior from the PR description
         id: get-behavior
         uses: actions/github-script@v6
