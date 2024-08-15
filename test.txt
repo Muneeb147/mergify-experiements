@@ -10,3 +10,5 @@ curl -X POST \
                 -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                 https://api.github.com/repos/${{ github.repository }}/actions/workflows/integration.yml/dispatches \
                 -d "{\"ref\": \"${BRANCH_REF}\"}"
+
+something
