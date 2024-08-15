@@ -20,6 +20,7 @@ jobs:
                     const label = 'trigger-second-workflow';
                     const workflowFile = 'second-workflow.yml';
                     const ref = 'main';
+                    const label2 = 'force:integration'
 
                     console.log(`Triggering workflow ${label} for PR ${prNumber}`);
 
@@ -28,7 +29,7 @@ jobs:
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     issue_number: prNumber,
-                    labels: [label]
+                    labels: [label2]
                     });
               
               
