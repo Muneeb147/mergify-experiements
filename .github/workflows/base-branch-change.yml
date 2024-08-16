@@ -18,13 +18,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create empty commit
+      - name: Create empty commit and Push
         run: |
+          git checkout origin/${{ github.head_ref }}
           git commit --allow-empty -m "Trigger workflows due to base branch change"
-
-      - name: Push commit
-        run: |
-          git push origin HEAD:${{ github.head_ref }} --force-with-lease
+          git push
 
       - name: Post a comment on the PR
         uses: actions/github-script@v6
