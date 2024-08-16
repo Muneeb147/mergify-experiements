@@ -20,7 +20,8 @@ jobs:
 
       - name: Create empty commit and Push
         run: |
-          git checkout origin/${{ github.head_ref }}
+          git fetch origin
+          git checkout ${{ github.head_ref }}
           git commit --allow-empty -m "Trigger workflows due to base branch change"
           git push
 
