@@ -8,7 +8,7 @@ on:
 jobs:
   trigger:
     runs-on: ubuntu-latest
-    if: ${{ github.event.changes.base && github.event.pull_request.base.ref == 'master' }}
+    if: ${{ github.event.changes.base && github.event.pull_request.base.ref == 'main' }}
     steps:
       - name: Post a comment on the PR
         uses: actions/github-script@v6
